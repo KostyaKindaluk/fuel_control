@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.id %}Edit{% else %}Create{% endif %} Route{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-title display-5">
+      {% if form.instance.id %}Edit{% else %}Create{% endif %} Route
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="start_point" class="form-label mt-3">Start point:</label>
+      {{ form.start_point }}
+      {% if form.start_point.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.start_point.errors }}
+        </div>
+      {% endif %}
+
+      <label for="end_point" class="form-label mt-3">End point:</label>
+      {{ form.end_point }}
+      {% if form.end_point.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.end_point.errors }}
+        </div>
+      {% endif %}
+
+      <label for="distance" class="form-label mt-3">Distance(KM):</label>
+      {{ form.distance }}
+      {% if form.distance.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.distance.errors }}
+        </div>
+      {% endif %}
+      
+      <button class="btn btn-success mt-3">Save</button>
+      <a href="{% url 'routes' %}">
+        <button type="button" class="btn btn-danger mt-3">Cancel</button>
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

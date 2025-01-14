@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.id %}Edit{% else %}Create{% endif %} Trip{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-title display-5">
+      {% if form.instance.id %}Edit{% else %}Create{% endif %} Trip
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="route" class="form-label mt-3">Route:</label>
+      {{ form.route }}
+      {% if form.route.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.route.errors }}
+        </div>
+      {% endif %}
+
+      <label for="assigned_vehicle" class="form-label mt-3">Your vehicle:</label>
+      {{ form.assigned_vehicle }}
+      {% if form.assigned_vehicle.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.assigned_vehicle.errors }}
+        </div>
+      {% endif %}
+
+      <label for="fuel_usage" class="form-label mt-3">Fuel usage(L):</label>
+      {{ form.fuel_usage }}
+      {% if form.fuel_usage.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.fuel_usage.errors }}
+        </div>
+      {% endif %}
+
+      <label for="start_time" class="form-label mt-3">Start time:</label>
+      {{ form.start_time }}
+      {% if form.start_time.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.start_time.errors }}
+        </div>
+      {% endif %}
+
+      <label for="end_time" class="form-label mt-3">End time:</label>
+      {{ form.end_time }}
+      {% if form.end_time.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.end_time.errors }}
+        </div>
+      {% endif %}
+      
+      <button class="btn btn-success mt-3">Save</button>
+      <a href="{% url 'driver' driver_id %}">
+        <button type="button" class="btn btn-danger mt-3">Cancel</button>
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

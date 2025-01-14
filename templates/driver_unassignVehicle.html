@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Unassign Vehicle{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-title display-5">Unassign Vehicle</p>
+    <p>Are you sure you want to unassign this vehicle?</p>
+    <form method="POST">
+      {% csrf_token %}
+      <button class="btn btn-danger">Unassign</button>
+      <a href="{% url 'driver' driver_id %}">
+        <button type="button" class="btn btn-secondary">Cancel</button>
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

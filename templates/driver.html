@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Driver Details{% endblock %}
+{% block content %}
+<div class="card mb-4">
+	<div class="card-body">
+		<p class="card-title display-5">Driver Information</p>
+		<p><strong>Full name:</strong> {{ driver.full_name }}</p>
+		<p><strong>Username:</strong> {{ driver.user.username }}</p>
+	</div>
+</div>
+
+<div class="card mb-4">
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<p class="card-title display-6 mb-0">Assigned Vehicles</p>
+			{% if type == 'manager' %}
+				<a href="{% url 'driver_assignVehicle' driver.id %}" class="btn btn-success">Assign</a>
+			{% endif %}
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Registration code</th>
+					<th>Model</th>
+					<th>Fuel usage</th>
+					{% if type == 'manager' %}
+						<th>Actions</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for assignment in vehicle_assignments %}
+					<tr class="align-middle">
+						<td>{{ assignment.vehicle.registration_code }}</td>
+						<td>{{ assignment.vehicle.model }}</td>
+						<td>{{ assignment.vehicle.fuel_usage }}</td>
+						{% if type == 'manager' %}
+							<td>
+								<a href="{% url 'driver_unassignVehicle' driver.id assignment.id %}" class="btn btn-danger">Unassign</a>
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<p class="card-title display-6 mb-0">Trips</p>
+			{% if type == 'driver' %}
+				<a href="{% url 'driver_trip_create' driver.id %}" class="btn btn-success">Create</a>
+			{% endif %}
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Route</th>
+					<th>Vehicle</th>
+					<th>Start time</th>
+					<th>End time</th>
+					<th>Fuel usage</th>
+					<th>Expected fuel usage</th>
+					{% if type == 'driver' %}
+						<th>Actions</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for trip in trips %}
+					<tr class="align-middle">
+						<td>{{ trip.route.start_point }} - {{ trip.route.end_point }}</td>
+						<td>{{ trip.assigned_vehicle.vehicle.registration_code }}</td>
+						<td>{{ trip.start_time }}</td>
+						<td>{{ trip.end_time }}</td>
+						<td>{{ trip.fuel_usage }}</td>
+						<td>{{ trip.expected_fuel_usage }}</td>
+						{% if type == 'driver' %}
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+										More
+									</button>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'driver_trip_edit' driver.id trip.id %}">Edit</a></li>
+										<li><a class="dropdown-item" href="{% url 'driver_trip_delete' driver.id trip.id %}">Delete</a></li>
+									</ul>
+								</div>
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

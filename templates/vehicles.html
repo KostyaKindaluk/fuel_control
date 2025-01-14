@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Vehicles{% endblock %}
+{% block content %}
+<div class="card">
+	<div class="card-body">
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<p class="card-title display-5 mb-0">Vehicles</p>
+			<a href="{% url 'vehicle_create' %}" class="btn btn-success">Create</a>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Registration code</th>
+					<th>Model</th>
+					<th>Fuel usage</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for vehicle in vehicles %}
+					<tr class="align-middle">
+						<td>{{ vehicle.registration_code }}</td>
+						<td>{{ vehicle.model }}</td>
+						<td>{{ vehicle.fuel_usage }}</td>
+						<td>
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+									More
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="{% url 'vehicle_edit' vehicle.id %}">Edit</a></li>
+									<li><a class="dropdown-item" href="{% url 'vehicle_delete' vehicle.id %}">Delete</a></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

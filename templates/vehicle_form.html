@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.id %}Edit{% else %}Create{% endif %} Vehicle{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-title display-5">
+      {% if form.instance.id %}Edit{% else %}Create{% endif %} Vehicle
+    </p>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="registration_code" class="form-label mt-3">Registration code:</label>
+      {{ form.registration_code }}
+      {% if form.registration_code.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.registration_code.errors }}
+        </div>
+      {% endif %}
+
+      <label for="model" class="form-label mt-3">Model:</label>
+      {{ form.model }}
+      {% if form.model.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.model.errors }}
+        </div>
+      {% endif %}
+
+      <label for="fuel_usage" class="form-label mt-3">Fuel usage(L/KM):</label>
+      {{ form.fuel_usage }}
+      {% if form.fuel_usage.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.fuel_usage.errors }}
+        </div>
+      {% endif %}
+      
+      <button class="btn btn-success mt-3">Save</button>
+      <a href="{% url 'vehicles' %}">
+        <button type="button" class="btn btn-danger mt-3">Cancel</button>
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Assign Vehicle{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p class="card-title display-5">Assign Vehicle</p>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="vehicle" class="form-label mt-3">Vehicle:</label>
+      {{ form.vehicle }}
+      {% if form.vehicle.errors %}
+        <div class="invalid-feedback d-block">
+          {{ form.vehicle.errors }}
+        </div>
+      {% endif %}
+
+      <button class="btn btn-success mt-3">Assign</button>
+      <a href="{% url 'driver' driver_id %}">
+        <button type="button" class="btn btn-danger mt-3">Cancel</button>
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}
